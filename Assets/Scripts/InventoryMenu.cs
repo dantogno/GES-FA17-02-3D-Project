@@ -4,10 +4,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryMenu : MonoBehaviour {
-
+    #region editor fields
     [SerializeField]
     private GameObject inventoryMenuPanel;
+    #endregion
 
+    #region private fields
+    private List<InventoryObject> playerInventory;
+    #endregion
+
+    #region properties
+    public List<InventoryObject> PlayerInventory
+    {
+        get
+        {
+            return playerInventory;
+        }
+    }
     private bool IsMenuOpen
     {
         get
@@ -16,8 +29,18 @@ public class InventoryMenu : MonoBehaviour {
         }
     }
 
-	// Use this for initialization
-	void Start ()
+    #endregion
+
+    // Happens before start.
+    // Need to initialize inventory list early
+    // so other things can access it in Start
+    private void Awake()
+    {
+        playerInventory = new List<InventoryObject>();
+    }
+
+    // Use this for initialization
+    void Start ()
     {
         HideMenu();	
 	}
