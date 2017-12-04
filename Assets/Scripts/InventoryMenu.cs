@@ -8,6 +8,14 @@ public class InventoryMenu : MonoBehaviour {
     [SerializeField]
     private GameObject inventoryMenuPanel;
 
+    private bool IsMenuOpen
+    {
+        get
+        {
+            return inventoryMenuPanel.activeSelf;
+        }
+    }
+
 	// Use this for initialization
 	void Start ()
     {
@@ -24,17 +32,36 @@ public class InventoryMenu : MonoBehaviour {
     {
         if (Input.GetButtonDown("Cancel"))
         {
-            ShowMenu();
+            if (IsMenuOpen)
+                HideMenu();
+            else
+                ShowMenu();
         }
     }
 
     private void ShowMenu()
     {
         inventoryMenuPanel.SetActive(true);
+        UpdateCursor();
     }
 
     private void HideMenu()
     {
         inventoryMenuPanel.SetActive(false);
+        UpdateCursor();
+    }
+
+    private void UpdateCursor()
+    {
+        if (IsMenuOpen)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 }
