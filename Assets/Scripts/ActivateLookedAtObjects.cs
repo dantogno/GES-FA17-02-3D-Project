@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,13 +14,26 @@ public class ActivateLookedAtObjects : MonoBehaviour
     [SerializeField]
     private Text lookedAtObjectText;
 
-
     private IActivatable lookedAtObject;
 
     private void Update()
     {
         UpdateLookedAtObject();
+        UpdateLookedAtObjectText();
         HandleInput();
+    }
+
+    private void UpdateLookedAtObjectText()
+    {
+        // TODO: change looked at object text to reflect what we are looking at!
+        if (lookedAtObject == null)
+        {
+            lookedAtObjectText.text = string.Empty;
+        }
+        else
+        {
+            lookedAtObjectText.text = lookedAtObject.NameText;
+        }
     }
 
     private void UpdateLookedAtObject()
@@ -33,11 +47,11 @@ public class ActivateLookedAtObjects : MonoBehaviour
         {
             Debug.Log(raycastHit.transform.name + " is being looked at!!!!");
 
-            lookedAtObject = raycastHit.transform.GetComponent<IActivatable>();
-
-            // TODO: change looked at object text to reflect what we are looking at!
-
-           
+            lookedAtObject = raycastHit.transform.GetComponent<IActivatable>();                      
+        }
+        else
+        {
+            lookedAtObject = null; 
         }
     }
 
